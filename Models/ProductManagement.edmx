@@ -151,6 +151,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usermaster_UserRolemaster">
+          <End Role="UserRolemaster" Type="Self.UserRolemaster" Multiplicity="0..1" />
+          <End Role="Usermaster" Type="Self.Usermaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRolemaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usermaster">
+              <PropertyRef Name="UserRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ProductManagementModelStoreContainer">
           <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CoutryMaster" EntityType="Self.CoutryMaster" Schema="dbo" store:Type="Tables" />
@@ -176,6 +188,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Usermaster_StateMaster" Association="Self.FK_Usermaster_StateMaster">
             <End Role="StateMaster" EntitySet="StateMaster" />
+            <End Role="Usermaster" EntitySet="Usermaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usermaster_UserRolemaster" Association="Self.FK_Usermaster_UserRolemaster">
+            <End Role="UserRolemaster" EntitySet="UserRolemaster" />
             <End Role="Usermaster" EntitySet="Usermaster" />
           </AssociationSet>
         </EntityContainer>
@@ -266,6 +282,7 @@
           <NavigationProperty Name="CityMaster" Relationship="Self.FK_Usermaster_CityMaster" FromRole="Usermaster" ToRole="CityMaster" />
           <NavigationProperty Name="CoutryMaster" Relationship="Self.FK_Usermaster_CoutryMaster" FromRole="Usermaster" ToRole="CoutryMaster" />
           <NavigationProperty Name="StateMaster" Relationship="Self.FK_Usermaster_StateMaster" FromRole="Usermaster" ToRole="StateMaster" />
+          <NavigationProperty Name="UserRolemaster" Relationship="ProductManagementModel.FK_Usermaster_UserRolemaster" FromRole="Usermaster" ToRole="UserRolemaster" />
         </EntityType>
         <EntityType Name="UserRolemaster">
           <Key>
@@ -278,6 +295,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int64" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Usermasters" Relationship="ProductManagementModel.FK_Usermaster_UserRolemaster" FromRole="UserRolemaster" ToRole="Usermaster" />
         </EntityType>
         <Association Name="FK_CityMaster_CityMaster">
           <End Role="StateMaster" Type="Self.StateMaster" Multiplicity="0..1" />
@@ -366,7 +384,23 @@
             <End Role="StateMaster" EntitySet="StateMasters" />
             <End Role="Usermaster" EntitySet="Usermasters" />
           </AssociationSet>
+          <AssociationSet Name="FK_Usermaster_UserRolemaster" Association="ProductManagementModel.FK_Usermaster_UserRolemaster">
+            <End Role="UserRolemaster" EntitySet="UserRolemasters" />
+            <End Role="Usermaster" EntitySet="Usermasters" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Usermaster_UserRolemaster">
+          <End Type="ProductManagementModel.UserRolemaster" Role="UserRolemaster" Multiplicity="0..1" />
+          <End Type="ProductManagementModel.Usermaster" Role="Usermaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRolemaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Usermaster">
+              <PropertyRef Name="UserRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

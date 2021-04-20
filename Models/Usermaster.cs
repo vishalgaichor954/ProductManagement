@@ -37,5 +37,6 @@ namespace ProductManagement.Models
         public virtual CityMaster CityMaster { get; set; }
         public virtual CoutryMaster CoutryMaster { get; set; }
         public virtual StateMaster StateMaster { get; set; }
+        public virtual UserRolemaster UserRolemaster { get; set; }
     }
 }
