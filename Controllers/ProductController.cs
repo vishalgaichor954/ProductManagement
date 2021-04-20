@@ -1,4 +1,5 @@
-﻿using ProductManagement.Models;
+﻿using ProductManagement.Filters;
+using ProductManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,15 +14,13 @@ namespace ProductManagement.Controllers
     {
         ProductManagementEntities managementEntities = new ProductManagementEntities();
         // GET api/<controller>
+        //This method is For all types of role  
+        [CustomAuthorizefilter(Roles = "SuperAdmin, Admin, User")]
+        [HttpGet]
+        [Route("api/Product/getvalues")]
         public IEnumerable<Usermaster> Get()
         {
             IEnumerable<Usermaster> usermaster = managementEntities.Usermasters.ToList();
-            foreach (var itm in usermaster)
-            {
-                itm.CityMaster = null;
-                itm.CoutryMaster = null;
-                itm.StateMaster = null;
-            }
             return usermaster;
         }
 
@@ -52,7 +51,7 @@ namespace ProductManagement.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
-            var itemToRemove = managementEntities.Usermasters.SingleOrDefault(x => x.id == 1); //returns a single item.
+            var itemToRemove = managementEntities.Usermasters.SingleOrDefault(x => x.ID == id); //returns a single item.
 
             if (itemToRemove != null)
             {

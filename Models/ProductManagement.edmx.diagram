@@ -16,6 +16,7 @@
         <AssociationConnector Association="ProductManagementModel.FK_StateMaster_CoutryMaster" ManuallyRouted="false" />
         <AssociationConnector Association="ProductManagementModel.FK_Usermaster_CoutryMaster" ManuallyRouted="false" />
         <AssociationConnector Association="ProductManagementModel.FK_Usermaster_StateMaster" ManuallyRouted="false" />
+        <AssociationConnector Association="ProductManagementModel.FK_Usermaster_UserRolemaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
