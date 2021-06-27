@@ -198,6 +198,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductMasterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\CustomAuthorizefilter.cs" />
@@ -211,7 +212,11 @@
       <DependentUpon>ProductManagement.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomModels\LoginViewModel.cs" />
+    <Compile Include="Models\CustomModels\ProductDataModel.cs" />
     <Compile Include="Models\ProductCategorymaster.cs">
+      <DependentUpon>ProductManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductImageMapping.cs">
       <DependentUpon>ProductManagement.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductManagement.Context.cs">
@@ -229,7 +234,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductManagement.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductMaster.cs">
+      <DependentUpon>ProductManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductTypeMaster.cs">
+      <DependentUpon>ProductManagement.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StateMaster.cs">
+      <DependentUpon>ProductManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>ProductManagement.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usermaster.cs">
@@ -252,6 +266,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\ProductImages\Iphone11_01.jpg" />
+    <Content Include="Images\ProductImages\Iphone11_02.jpg" />
     <Content Include="Models\ProductManagement.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ProductManagement.Context.cs</LastGenOutput>

@@ -31,5 +31,9 @@ namespace ProductManagement.Models
         public virtual DbSet<StateMaster> StateMasters { get; set; }
         public virtual DbSet<Usermaster> Usermasters { get; set; }
         public virtual DbSet<UserRolemaster> UserRolemasters { get; set; }
+        public virtual DbSet<ProductMaster> ProductMasters { get; set; }
+        public virtual DbSet<ProductTypeMaster> ProductTypeMasters { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<ProductImageMapping> ProductImageMappings { get; set; }
     }
 }

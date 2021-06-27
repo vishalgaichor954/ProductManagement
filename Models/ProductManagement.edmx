@@ -42,6 +42,52 @@
           <Property Name="CreatedBy" Type="bigint" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductImageMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" />
+          <Property Name="ProductImage" Type="varchar" MaxLength="500" />
+          <Property Name="ImageTitle" Type="varchar" MaxLength="500" />
+          <Property Name="ImageDescription" Type="varchar" MaxLength="500" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="500" />
+          <Property Name="SequenceNo" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="200" />
+          <Property Name="ProductDescription" Type="varchar(max)" />
+          <Property Name="ProductKeyword" Type="varchar" MaxLength="50" />
+          <Property Name="ProductMetadata" Type="varchar" MaxLength="500" />
+          <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProductTypeMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductCategoryId" Type="bigint" />
+          <Property Name="ProductType" Type="varchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="StateMaster">
           <Key>
             <PropertyRef Name="ID" />
@@ -54,6 +100,16 @@
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="bigint" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Usermaster">
           <Key>
@@ -100,6 +156,30 @@
             </Principal>
             <Dependent Role="CityMaster">
               <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductImageMapping_ProductImageMapping">
+          <End Role="ProductMaster" Type="Self.ProductMaster" Multiplicity="0..1" />
+          <End Role="ProductImageMapping" Type="Self.ProductImageMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductImageMapping">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductTypeMaster_ProductCategorymaster">
+          <End Role="ProductCategorymaster" Type="Self.ProductCategorymaster" Multiplicity="0..1" />
+          <End Role="ProductTypeMaster" Type="Self.ProductTypeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategorymaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductTypeMaster">
+              <PropertyRef Name="ProductCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -167,12 +247,24 @@
           <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CoutryMaster" EntityType="Self.CoutryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategorymaster" EntityType="Self.ProductCategorymaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImageMapping" EntityType="Self.ProductImageMapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductMaster" EntityType="Self.ProductMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTypeMaster" EntityType="Self.ProductTypeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StateMaster" EntityType="Self.StateMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usermaster" EntityType="Self.Usermaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRolemaster" EntityType="Self.UserRolemaster" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CityMaster_CityMaster" Association="Self.FK_CityMaster_CityMaster">
             <End Role="StateMaster" EntitySet="StateMaster" />
             <End Role="CityMaster" EntitySet="CityMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImageMapping_ProductImageMapping" Association="Self.FK_ProductImageMapping_ProductImageMapping">
+            <End Role="ProductMaster" EntitySet="ProductMaster" />
+            <End Role="ProductImageMapping" EntitySet="ProductImageMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductTypeMaster_ProductCategorymaster" Association="Self.FK_ProductTypeMaster_ProductCategorymaster">
+            <End Role="ProductCategorymaster" EntitySet="ProductCategorymaster" />
+            <End Role="ProductTypeMaster" EntitySet="ProductTypeMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_StateMaster_CoutryMaster" Association="Self.FK_StateMaster_CoutryMaster">
             <End Role="CoutryMaster" EntitySet="CoutryMaster" />
@@ -239,6 +331,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int64" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProductTypeMasters" Relationship="ProductManagementModel.FK_ProductTypeMaster_ProductCategorymaster" FromRole="ProductCategorymaster" ToRole="ProductTypeMaster" />
         </EntityType>
         <EntityType Name="StateMaster">
           <Key>
@@ -388,6 +481,18 @@
             <End Role="UserRolemaster" EntitySet="UserRolemasters" />
             <End Role="Usermaster" EntitySet="Usermasters" />
           </AssociationSet>
+          <EntitySet Name="ProductMasters" EntityType="ProductManagementModel.ProductMaster" />
+          <EntitySet Name="ProductTypeMasters" EntityType="ProductManagementModel.ProductTypeMaster" />
+          <EntitySet Name="sysdiagrams" EntityType="ProductManagementModel.sysdiagram" />
+          <AssociationSet Name="FK_ProductTypeMaster_ProductCategorymaster" Association="ProductManagementModel.FK_ProductTypeMaster_ProductCategorymaster">
+            <End Role="ProductCategorymaster" EntitySet="ProductCategorymasters" />
+            <End Role="ProductTypeMaster" EntitySet="ProductTypeMasters" />
+          </AssociationSet>
+          <EntitySet Name="ProductImageMappings" EntityType="ProductManagementModel.ProductImageMapping" />
+          <AssociationSet Name="FK_ProductImageMapping_ProductImageMapping" Association="ProductManagementModel.FK_ProductImageMapping_ProductImageMapping">
+            <End Role="ProductMaster" EntitySet="ProductMasters" />
+            <End Role="ProductImageMapping" EntitySet="ProductImageMappings" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Usermaster_UserRolemaster">
           <End Type="ProductManagementModel.UserRolemaster" Role="UserRolemaster" Multiplicity="0..1" />
@@ -398,6 +503,89 @@
             </Principal>
             <Dependent Role="Usermaster">
               <PropertyRef Name="UserRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ProductDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProductKeyword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductMetadata" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ProductPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductImageMappings" Relationship="ProductManagementModel.FK_ProductImageMapping_ProductImageMapping" FromRole="ProductMaster" ToRole="ProductImageMapping" />
+        </EntityType>
+        <EntityType Name="ProductTypeMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductCategoryId" Type="Int64" />
+          <Property Name="ProductType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductCategorymaster" Relationship="ProductManagementModel.FK_ProductTypeMaster_ProductCategorymaster" FromRole="ProductTypeMaster" ToRole="ProductCategorymaster" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_ProductTypeMaster_ProductCategorymaster">
+          <End Type="ProductManagementModel.ProductCategorymaster" Role="ProductCategorymaster" Multiplicity="0..1" />
+          <End Type="ProductManagementModel.ProductTypeMaster" Role="ProductTypeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategorymaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductTypeMaster">
+              <PropertyRef Name="ProductCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductImageMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int64" />
+          <Property Name="ProductImage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ImageTitle" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ImageDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SequenceNo" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProductMaster" Relationship="ProductManagementModel.FK_ProductImageMapping_ProductImageMapping" FromRole="ProductImageMapping" ToRole="ProductMaster" />
+        </EntityType>
+        <Association Name="FK_ProductImageMapping_ProductImageMapping">
+          <End Type="ProductManagementModel.ProductMaster" Role="ProductMaster" Multiplicity="0..1" />
+          <End Type="ProductManagementModel.ProductImageMapping" Role="ProductImageMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductImageMapping">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -496,6 +684,66 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductMasters">
+            <EntityTypeMapping TypeName="ProductManagementModel.ProductMaster">
+              <MappingFragment StoreEntitySet="ProductMaster">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductMetadata" ColumnName="ProductMetadata" />
+                <ScalarProperty Name="ProductKeyword" ColumnName="ProductKeyword" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypeMasters">
+            <EntityTypeMapping TypeName="ProductManagementModel.ProductTypeMaster">
+              <MappingFragment StoreEntitySet="ProductTypeMaster">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="ProductCategoryId" ColumnName="ProductCategoryId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProductManagementModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductImageMappings">
+            <EntityTypeMapping TypeName="ProductManagementModel.ProductImageMapping">
+              <MappingFragment StoreEntitySet="ProductImageMapping">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SequenceNo" ColumnName="SequenceNo" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ImageDescription" ColumnName="ImageDescription" />
+                <ScalarProperty Name="ImageTitle" ColumnName="ImageTitle" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
