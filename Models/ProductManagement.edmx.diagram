@@ -17,6 +17,12 @@
         <AssociationConnector Association="ProductManagementModel.FK_Usermaster_CoutryMaster" ManuallyRouted="false" />
         <AssociationConnector Association="ProductManagementModel.FK_Usermaster_StateMaster" ManuallyRouted="false" />
         <AssociationConnector Association="ProductManagementModel.FK_Usermaster_UserRolemaster" />
+        <EntityTypeShape EntityType="ProductManagementModel.ProductMaster" Width="1.5" PointX="5.375" PointY="8" />
+        <EntityTypeShape EntityType="ProductManagementModel.ProductTypeMaster" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="ProductManagementModel.sysdiagram" Width="1.5" PointX="10.375" PointY="0.75" />
+        <AssociationConnector Association="ProductManagementModel.FK_ProductTypeMaster_ProductCategorymaster" />
+        <EntityTypeShape EntityType="ProductManagementModel.ProductImageMapping" Width="1.5" PointX="7.625" PointY="7.875" />
+        <AssociationConnector Association="ProductManagementModel.FK_ProductImageMapping_ProductImageMapping" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

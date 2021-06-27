@@ -12,23 +12,21 @@ namespace ProductManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductCategorymaster
+    public partial class ProductImageMapping
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProductCategorymaster()
-        {
-            this.ProductTypeMasters = new HashSet<ProductTypeMaster>();
-        }
-    
         public long ID { get; set; }
-        public string UserCategory { get; set; }
-        public bool IsActive { get; set; }
+        public Nullable<long> ProductID { get; set; }
+        public string ProductImage { get; set; }
+        public string ImageTitle { get; set; }
+        public string ImageDescription { get; set; }
+        public string ImagePath { get; set; }
+        public Nullable<int> SequenceNo { get; set; }
+        public Nullable<bool> IsActive { get; set; }
         public Nullable<long> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<long> CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductTypeMaster> ProductTypeMasters { get; set; }
+        public virtual ProductMaster ProductMaster { get; set; }
     }
 }
