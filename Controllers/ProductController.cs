@@ -46,6 +46,7 @@ namespace ProductManagement.Controllers
                     prodDataModelList.Add(productData);
                 }
             }
+
             return prodDataModelList;
         }
 

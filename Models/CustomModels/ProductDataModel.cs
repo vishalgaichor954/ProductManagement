@@ -15,7 +15,6 @@ namespace ProductManagement.Models.CustomModels
         public Nullable<decimal> ProductPrice { get; set; }
         public string productImageFile { get; set; }
         public string productImageName { get; set; }
-
-
+    //    
     }
 }
