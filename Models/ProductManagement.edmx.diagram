@@ -23,6 +23,7 @@
         <AssociationConnector Association="ProductManagementModel.FK_ProductTypeMaster_ProductCategorymaster" />
         <EntityTypeShape EntityType="ProductManagementModel.ProductImageMapping" Width="1.5" PointX="7.625" PointY="7.875" />
         <AssociationConnector Association="ProductManagementModel.FK_ProductImageMapping_ProductImageMapping" />
+        <EntityTypeShape EntityType="ProductManagementModel.ProductPriceMapping" Width="1.5" PointX="10.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

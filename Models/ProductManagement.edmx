@@ -35,7 +35,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserCategory" Type="varchar" MaxLength="50" />
+          <Property Name="ProductCategory" Type="varchar" MaxLength="50" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="UpdatedBy" Type="bigint" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -64,6 +64,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductCategory" Type="bigint" />
+          <Property Name="ProductType" Type="bigint" />
           <Property Name="ProductName" Type="varchar" MaxLength="200" />
           <Property Name="ProductDescription" Type="varchar(max)" />
           <Property Name="ProductKeyword" Type="varchar" MaxLength="50" />
@@ -73,7 +75,22 @@
           <Property Name="UpdatedBy" Type="bigint" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="bigint" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductPriceMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="bigint" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ValidFrom" Type="date" />
+          <Property Name="ValidTo" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UpdatedBy" Type="bigint" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="bigint" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductTypeMaster">
           <Key>
@@ -86,7 +103,7 @@
           <Property Name="UpdatedBy" Type="bigint" />
           <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="bigint" />
-          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="StateMaster">
           <Key>
@@ -249,6 +266,7 @@
           <EntitySet Name="ProductCategorymaster" EntityType="Self.ProductCategorymaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductImageMapping" EntityType="Self.ProductImageMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductMaster" EntityType="Self.ProductMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductPriceMapping" EntityType="Self.ProductPriceMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTypeMaster" EntityType="Self.ProductTypeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StateMaster" EntityType="Self.StateMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -332,6 +350,7 @@
           <Property Name="CreatedBy" Type="Int64" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ProductTypeMasters" Relationship="ProductManagementModel.FK_ProductTypeMaster_ProductCategorymaster" FromRole="ProductCategorymaster" ToRole="ProductTypeMaster" />
+          <Property Name="ProductCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StateMaster">
           <Key>
@@ -493,6 +512,7 @@
             <End Role="ProductMaster" EntitySet="ProductMasters" />
             <End Role="ProductImageMapping" EntitySet="ProductImageMappings" />
           </AssociationSet>
+          <EntitySet Name="ProductPriceMappings" EntityType="ProductManagementModel.ProductPriceMapping" />
         </EntityContainer>
         <Association Name="FK_Usermaster_UserRolemaster">
           <End Type="ProductManagementModel.UserRolemaster" Role="UserRolemaster" Multiplicity="0..1" />
@@ -520,8 +540,10 @@
           <Property Name="UpdatedBy" Type="Int64" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int64" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="ProductImageMappings" Relationship="ProductManagementModel.FK_ProductImageMapping_ProductImageMapping" FromRole="ProductMaster" ToRole="ProductImageMapping" />
+          <Property Name="ProductCategory" Type="Int64" />
+          <Property Name="ProductType" Type="Int64" />
         </EntityType>
         <EntityType Name="ProductTypeMaster">
           <Key>
@@ -534,7 +556,7 @@
           <Property Name="UpdatedBy" Type="Int64" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int64" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="ProductCategorymaster" Relationship="ProductManagementModel.FK_ProductTypeMaster_ProductCategorymaster" FromRole="ProductTypeMaster" ToRole="ProductCategorymaster" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -589,6 +611,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProductPriceMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int64" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ValidFrom" Type="DateTime" Precision="0" />
+          <Property Name="ValidTo" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UpdatedBy" Type="Int64" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -625,8 +662,8 @@
           <EntitySetMapping Name="ProductCategorymasters">
             <EntityTypeMapping TypeName="ProductManagementModel.ProductCategorymaster">
               <MappingFragment StoreEntitySet="ProductCategorymaster">
+                <ScalarProperty Name="ProductCategory" ColumnName="ProductCategory" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserCategory" ColumnName="UserCategory" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
@@ -690,6 +727,8 @@
           <EntitySetMapping Name="ProductMasters">
             <EntityTypeMapping TypeName="ProductManagementModel.ProductMaster">
               <MappingFragment StoreEntitySet="ProductMaster">
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="ProductCategory" ColumnName="ProductCategory" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
@@ -742,6 +781,22 @@
                 <ScalarProperty Name="ImageDescription" ColumnName="ImageDescription" />
                 <ScalarProperty Name="ImageTitle" ColumnName="ImageTitle" />
                 <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPriceMappings">
+            <EntityTypeMapping TypeName="ProductManagementModel.ProductPriceMapping">
+              <MappingFragment StoreEntitySet="ProductPriceMapping">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ValidTo" ColumnName="ValidTo" />
+                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

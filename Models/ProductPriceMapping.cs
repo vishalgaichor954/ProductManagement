@@ -12,17 +12,17 @@ namespace ProductManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductTypeMaster
+    public partial class ProductPriceMapping
     {
         public long ID { get; set; }
-        public Nullable<long> ProductCategoryId { get; set; }
-        public string ProductType { get; set; }
+        public long ProductID { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<System.DateTime> ValidFrom { get; set; }
+        public Nullable<System.DateTime> ValidTo { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<long> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<long> CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
-    
-        public virtual ProductCategorymaster ProductCategorymaster { get; set; }
     }
 }

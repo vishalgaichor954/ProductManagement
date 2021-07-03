@@ -30,7 +30,9 @@ namespace ProductManagement.Models
         public Nullable<long> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<long> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public Nullable<long> ProductCategory { get; set; }
+        public Nullable<long> ProductType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductImageMapping> ProductImageMappings { get; set; }

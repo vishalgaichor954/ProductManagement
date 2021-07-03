@@ -35,5 +35,6 @@ namespace ProductManagement.Models
         public virtual DbSet<ProductTypeMaster> ProductTypeMasters { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ProductImageMapping> ProductImageMappings { get; set; }
+        public virtual DbSet<ProductPriceMapping> ProductPriceMappings { get; set; }
     }
 }
